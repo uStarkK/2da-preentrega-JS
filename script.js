@@ -1,4 +1,4 @@
-let score, flag, cantidadAlumnos, counterAlumnos = 0;
+let darkMode, str ="holaXD";
 let alumnosIngresados = [];
 const soloLetras = /^[a-zA-Z \u00f1\u00d1]+$/;
 const formAlumnos = document.getElementById("añadirAlumnos");
@@ -6,7 +6,6 @@ const nombreAlumno = document.getElementById("cargarNombre")
 const apellidoAlumno = document.getElementById("cargarApellido")
 const edadAlumno = document.getElementById("cargarEdad")
 const notaAlumno = document.getElementById("cargarNota")
-let darkMode;
 if(localStorage.getItem("theme")){
     darkMode = localStorage.getItem("theme")
 } else{
@@ -26,15 +25,19 @@ class Alumnos {
 }
 
 
-function validarAlumno(event) { // => Verifica si los datos del alumno ingresado son correctos
+function validarAlumno(event) { 
     if (nombreAlumno.value === "" || edadAlumno.value === "" || notaAlumno.value === "" || apellidoAlumno.value ==="") {
-        /* alert("Capo no me dejes campos en blanco porque te voy a cagar a trompadas"); */
+        console.log("Por favor amigo, no dejes espacios en blanco, te aviso")
         return false
     }
     if(!soloLetras.test(nombreAlumno.value)){
-        /* alert("Amigo, pone un nombre que sea aceptado en el registro civil") */
+        console.log("FLACO PONÉ LETRAS, LETRAS.")
         return false
     }
+}
+
+function capitalize(str) {
+    return str[0].toUpperCase() + str.slice(1)  
 }
 
 
@@ -80,7 +83,7 @@ formAlumnos.addEventListener("submit", (event) => {
     if(validarAlumno() == false){
         return null
     } else{
-        const nuevoAlumno = new Alumnos(nombreAlumno.value, apellidoAlumno.value, edadAlumno.value, notaAlumno.value);
+        const nuevoAlumno = new Alumnos(capitalize(nombreAlumno.value), capitalize(apellidoAlumno.value), edadAlumno.value, notaAlumno.value);
         alumnosIngresados.push(nuevoAlumno)
         console.log(alumnosIngresados)
         renderizarAlumno(nuevoAlumno)
