@@ -1,0 +1,22 @@
+.alumno{
+    background-color: bisque;
+    margin-right: 90%;
+    margin-top: 5px;
+    color: black;
+}
+
+
+.containerBotonMode{
+    text-align: right;
+}
+
+body{
+    color: black;
+    background-color: antiquewhite;
+    transition: ease 1.2s;
+}
+
+.darkMode{
+    color: antiquewhite;
+    background-color: rgb(43, 41, 41);
+}
