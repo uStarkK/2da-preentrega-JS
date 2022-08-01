@@ -15,7 +15,7 @@ const notaAlumno = document.getElementById("cargarNota")
 darkMode = localStorage.getItem("theme") ?? "light"
 
 
-guardarNotasAlumnos = JSON.parse(localStorage.getItem("notas"))
+guardarNotasAlumnos = JSON.parse(localStorage.getItem("notas")) ?? []
 console.log(guardarNotasAlumnos)
 
 if(darkMode === "dark"){
