@@ -1,16 +1,22 @@
 let darkMode, str ="holaXD";
 let alumnosIngresados = [];
+let guardarNotasAlumnos = [];
+let promedioNotas = 0
+let sumarNotas = 0
+let i = 0;
 const soloLetras = /^[a-zA-Z \u00f1\u00d1]+$/;
 const formAlumnos = document.getElementById("añadirAlumnos");
 const nombreAlumno = document.getElementById("cargarNombre")
 const apellidoAlumno = document.getElementById("cargarApellido")
 const edadAlumno = document.getElementById("cargarEdad")
 const notaAlumno = document.getElementById("cargarNota")
-if(localStorage.getItem("theme")){
-    darkMode = localStorage.getItem("theme")
-} else{
-    localStorage.setItem("theme", "light")
-}
+
+
+darkMode = localStorage.getItem("theme") ?? "light"
+
+
+guardarNotasAlumnos = JSON.parse(localStorage.getItem("notas"))
+console.log(guardarNotasAlumnos)
 
 if(darkMode === "dark"){
     document.body.classList.add("darkMode")
@@ -37,7 +43,7 @@ function validarAlumno(event) {
 }
 
 function capitalize(str) {
-    return str[0].toUpperCase() + str.slice(1)  
+    return str[0].toUpperCase() + str.slice(1).toLowerCase()   
 }
 
 
@@ -72,10 +78,22 @@ const renderizarAlumno = (alumno) => {
     nota.innerHTML = `Nota: ${alumno.nota} `
 }
 if(localStorage.getItem("alumnos")){
-    alumnosIngresados = JSON.parse(localStorage.getItem("alumnos"))
+    alumnosIngresados = JSON.parse(localStorage.getItem("alumnos")) ?? [] 
     alumnosIngresados.forEach(alumno => renderizarAlumno(alumno))
-} else{
-    localStorage.setItem("alumnos", JSON.stringify(alumnosIngresados))
+}
+
+
+
+function promediarNotas(arr){ 
+    containerNotas.innerHTML = ""
+    const promedio = document.createElement("div")
+    containerNotas.appendChild(promedio)
+    for (i = 0; i < arr.length; i++) {
+        sumarNotas = sumarNotas + parseInt(arr[i]);
+    }
+    promedioNotas = sumarNotas / arr.length;
+    sumarNotas = 0;
+    promedio.innerHTML = `El promedio de notas es de ${promedioNotas}`
 }
 
 formAlumnos.addEventListener("submit", (event) => {
@@ -83,14 +101,16 @@ formAlumnos.addEventListener("submit", (event) => {
     if(validarAlumno() == false){
         return null
     } else{
-        const nuevoAlumno = new Alumnos(capitalize(nombreAlumno.value), capitalize(apellidoAlumno.value), edadAlumno.value, notaAlumno.value);
+        const nuevoAlumno = new Alumnos(capitalize(nombreAlumno.value), capitalize(apellidoAlumno.value), edadAlumno.value, (notaAlumno.value));
         alumnosIngresados.push(nuevoAlumno)
+        guardarNotasAlumnos.push(nuevoAlumno.nota);
         console.log(alumnosIngresados)
         renderizarAlumno(nuevoAlumno)
         formAlumnos.reset()
         localStorage.setItem("alumnos", JSON.stringify(alumnosIngresados))
+        localStorage.setItem("notas", JSON.stringify(guardarNotasAlumnos))
+        console.log(guardarNotasAlumnos)
     }
-    
 })
 
 const renderizarAprobados = () =>{
@@ -137,3 +157,12 @@ botonDark.addEventListener("click", () =>{
     localStorage.setItem("theme", "dark")
 })
 
+const containerNotas = document.createElement("div")
+document.body.appendChild(containerNotas)
+containerNotas.classList.add("containerNotas")
+const promedioDeNotas = document.getElementById("promediar")
+
+
+promedioDeNotas.addEventListener("click", () =>{
+    promediarNotas(guardarNotasAlumnos)
+})

@@ -1,6 +1,6 @@
 .alumno{
     background-color: bisque;
-    margin-right: 90%;
+    margin-right: 1%;
     margin-top: 5px;
     color: black;
 }
@@ -19,4 +19,12 @@ body{
 .darkMode{
     color: antiquewhite;
     background-color: rgb(43, 41, 41);
+}
+
+.containerAlumnosClass{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 45vh;
+    width: 20vw;
 }
