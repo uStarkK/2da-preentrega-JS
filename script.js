@@ -37,7 +37,7 @@ function validarAlumno(event) {
             icon: 'error',
             title: 'Oops...',
             text: 'Looks like DEJASTE ESPACIOS EN BLANCO EN EL INPUT',
-            footer: '<a href="#">Qué hará este botón?</a>'
+            footer: '<a href="https://youtu.be/Q5-6RxRiDck?t=3" target="_blank">Qué hará este botón?</a>'
         })
         return false
     }
