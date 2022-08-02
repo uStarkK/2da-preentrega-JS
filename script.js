@@ -33,11 +33,20 @@ class Alumnos {
 
 function validarAlumno(event) { 
     if (nombreAlumno.value === "" || edadAlumno.value === "" || notaAlumno.value === "" || apellidoAlumno.value ==="") {
-        console.log("Por favor amigo, no dejes espacios en blanco, te aviso")
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Looks like DEJASTE ESPACIOS EN BLANCO EN EL INPUT',
+            footer: '<a href="#">Qué hará este botón?</a>'
+        })
         return false
     }
     if(!soloLetras.test(nombreAlumno.value)){
-        console.log("FLACO PONÉ LETRAS, LETRAS.")
+        Swal.fire(
+            '?',
+            '? letras.',
+            'question'
+        )
         return false
     }
 }
@@ -77,10 +86,10 @@ const renderizarAlumno = (alumno) => {
     datos.appendChild(nota)
     nota.innerHTML = `Nota: ${alumno.nota} `
 }
-if(localStorage.getItem("alumnos")){
+
     alumnosIngresados = JSON.parse(localStorage.getItem("alumnos")) ?? [] 
     alumnosIngresados.forEach(alumno => renderizarAlumno(alumno))
-}
+
 
 
 
@@ -92,9 +101,9 @@ function promediarNotas(arr){
         sumarNotas = sumarNotas + parseInt(arr[i]);
     }
     promedioNotas = sumarNotas / arr.length;
-    sumarNotas = 0;
-    promedio.innerHTML = `El promedio de notas es de ${promedioNotas}`
+    promedio.innerHTML = `La sumatoria de las notas es de ${sumarNotas}. El promedio de notas es de ${promedioNotas} de un total de ${guardarNotasAlumnos.length} alumnos`
 }
+
 
 formAlumnos.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -110,6 +119,7 @@ formAlumnos.addEventListener("submit", (event) => {
         localStorage.setItem("alumnos", JSON.stringify(alumnosIngresados))
         localStorage.setItem("notas", JSON.stringify(guardarNotasAlumnos))
         console.log(guardarNotasAlumnos)
+        console.log(samuel)
     }
 })
 
@@ -165,4 +175,17 @@ const promedioDeNotas = document.getElementById("promediar")
 
 promedioDeNotas.addEventListener("click", () =>{
     promediarNotas(guardarNotasAlumnos)
+    Swal.fire(
+        `BUENARDO EL PROMEDIO DE TUS PIBES ES DE ${promedioNotas} ` ,
+        `SON RE CAPOS TUS ${guardarNotasAlumnos.length} ALUMNOS ENCIMA SUMAN ${sumarNotas} ENTRE TODOS EPICO`,
+        'success'
+    )
+    sumarNotas = 0;
 })
+
+const samuel = structuredClone(alumnosIngresados[0])
+samuel.nombre = "Samuel"
+samuel.apellido ="Tutor"
+samuel.edad = "re pocos"
+samuel.nota = 99
+
