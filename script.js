@@ -101,7 +101,7 @@ function promediarNotas(arr){
         sumarNotas = sumarNotas + parseInt(arr[i]);
     }
     promedioNotas = sumarNotas / arr.length;
-    promedio.innerHTML = `La sumatoria de las notas es de ${sumarNotas}. El promedio de notas es de ${promedioNotas} de un total de ${guardarNotasAlumnos.length} alumnos`
+    promedio.innerHTML = `La sumatoria de las notas es de ${sumarNotas}. El promedio de notas es de ${promedioNotas.toFixed(2)} de un total de ${guardarNotasAlumnos.length} alumnos`
 }
 
 
@@ -176,8 +176,8 @@ const promedioDeNotas = document.getElementById("promediar")
 promedioDeNotas.addEventListener("click", () =>{
     promediarNotas(guardarNotasAlumnos)
     Swal.fire(
-        `BUENARDO EL PROMEDIO DE TUS PIBES ES DE ${promedioNotas} ` ,
-        `SON RE CAPOS TUS ${guardarNotasAlumnos.length} ALUMNOS ENCIMA SUMAN ${sumarNotas} ENTRE TODOS EPICO`,
+        `BUENARDO EL PROMEDIO DE TUS PIBES ES DE ${promedioNotas.toFixed(2)} ` ,
+        `SON RE CAPOS TUS ${guardarNotasAlumnos.length} ALUMNOS ENCIMA SUMAN ${sumarNotas} ENTRE TODOS RE EPICO`,
         'success'
     )
     sumarNotas = 0;
