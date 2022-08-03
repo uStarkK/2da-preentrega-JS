@@ -186,6 +186,6 @@ promedioDeNotas.addEventListener("click", () =>{
 const samuel = structuredClone(alumnosIngresados[0])
 samuel.nombre = "Samuel"
 samuel.apellido ="Tutor"
-samuel.edad = "re pocos"
+samuel.edad = "re joven"
 samuel.nota = 99
 
