@@ -12,9 +12,27 @@ const edadAlumno = document.getElementById("cargarEdad")
 const notaAlumno = document.getElementById("cargarNota")
 darkMode = localStorage.getItem("theme") ?? "light"
 
-
 guardarNotasAlumnos = JSON.parse(localStorage.getItem("notas")) ?? []
 console.log(guardarNotasAlumnos)
+
+
+function getData() {
+    if (localStorage.getItem("alumnos")) {
+        return JSON.parse(localStorage.getItem("alumnos"));
+    }
+
+    return fetch('./json/alumnos.json')
+        .then((response) => response.json())
+        .then((data) => {
+            localStorage.setItem("alumnos", JSON.stringify(data));
+            data.forEach(data => alumnosIngresados.push(data))
+            data.forEach(data => guardarNotasAlumnos.push(data.nota))
+            data.forEach(data => renderizarAlumno(data))
+            return getData();
+        });
+}
+
+getData()
 
 if(darkMode === "dark"){
     document.body.classList.add("darkMode")
@@ -89,14 +107,7 @@ const renderizarAlumno = (alumno) => {
     alumnosIngresados = JSON.parse(localStorage.getItem("alumnos")) ?? [] 
     alumnosIngresados.forEach(alumno => renderizarAlumno(alumno))
 
-    fetch("./json/alumnos.json")
-    .then(response => response.json())
-    .then(data => {
-        data.forEach((data => {
-            renderizarAlumno(data);
-            alumnosIngresados.push(data)
-        }))
-    }) 
+
 
 
 function promediarNotas(arr){ 
@@ -187,5 +198,3 @@ promedioDeNotas.addEventListener("click", () =>{
     )
     sumarNotas = 0;
 })
-
-
