@@ -10,8 +10,6 @@ const nombreAlumno = document.getElementById("cargarNombre")
 const apellidoAlumno = document.getElementById("cargarApellido")
 const edadAlumno = document.getElementById("cargarEdad")
 const notaAlumno = document.getElementById("cargarNota")
-
-
 darkMode = localStorage.getItem("theme") ?? "light"
 
 
@@ -57,6 +55,7 @@ function capitalize(str) {
 
 
 
+
 const containerAlumnos = document.createElement("div");
 document.body.appendChild(containerAlumnos);
 containerAlumnos.classList.add("containerAlumnosClass")
@@ -90,7 +89,14 @@ const renderizarAlumno = (alumno) => {
     alumnosIngresados = JSON.parse(localStorage.getItem("alumnos")) ?? [] 
     alumnosIngresados.forEach(alumno => renderizarAlumno(alumno))
 
-
+    fetch("./json/alumnos.json")
+    .then(response => response.json())
+    .then(data => {
+        data.forEach((data => {
+            renderizarAlumno(data);
+            alumnosIngresados.push(data)
+        }))
+    }) 
 
 
 function promediarNotas(arr){ 
@@ -119,7 +125,6 @@ formAlumnos.addEventListener("submit", (event) => {
         localStorage.setItem("alumnos", JSON.stringify(alumnosIngresados))
         localStorage.setItem("notas", JSON.stringify(guardarNotasAlumnos))
         console.log(guardarNotasAlumnos)
-        console.log(samuel)
     }
 })
 
@@ -183,9 +188,4 @@ promedioDeNotas.addEventListener("click", () =>{
     sumarNotas = 0;
 })
 
-const samuel = structuredClone(alumnosIngresados[0])
-samuel.nombre = "Samuel"
-samuel.apellido ="Tutor"
-samuel.edad = "re joven"
-samuel.nota = 99
 
